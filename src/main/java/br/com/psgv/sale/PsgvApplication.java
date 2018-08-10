@@ -83,8 +83,8 @@ public class PsgvApplication implements CommandLineRunner {
         
         cli1.getTelefones().addAll(Arrays.asList("23589546", "956321592"));
         
-        Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 23", "Jardim", "09551070", cli1, c1);
-        Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777102", cli1, c2);
+        Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 23", "Jardim", "09551070", cli1, c2);
+        Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777102", cli1, c1);
         
         cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
         

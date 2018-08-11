@@ -13,6 +13,7 @@ import br.com.psgv.sale.domain.Cidade;
 import br.com.psgv.sale.domain.Cliente;
 import br.com.psgv.sale.domain.Endereco;
 import br.com.psgv.sale.domain.Estado;
+import br.com.psgv.sale.domain.ItemPedido;
 import br.com.psgv.sale.domain.Pagamento;
 import br.com.psgv.sale.domain.PagamentoComBoleto;
 import br.com.psgv.sale.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import br.com.psgv.sale.repositories.CidadeRepository;
 import br.com.psgv.sale.repositories.ClienteRepository;
 import br.com.psgv.sale.repositories.EnderecoRepository;
 import br.com.psgv.sale.repositories.EstadoRepository;
+import br.com.psgv.sale.repositories.ItemPedidoRepository;
 import br.com.psgv.sale.repositories.PagamentoRepository;
 import br.com.psgv.sale.repositories.PedidoRepository;
 import br.com.psgv.sale.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class PsgvApplication implements CommandLineRunner {
     
     @Autowired
     private PagamentoRepository pagamentoRepository;
+    
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(PsgvApplication.class, args);
@@ -121,5 +126,17 @@ public class PsgvApplication implements CommandLineRunner {
         pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
         pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
         
+        ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+        ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+        ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+        
+        ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+        ped2.getItens().addAll(Arrays.asList(ip3));
+        
+        p1.getItens().addAll(Arrays.asList(ip1));
+        p2.getItens().addAll(Arrays.asList(ip3));
+        p3.getItens().addAll(Arrays.asList(ip2));
+        
+        itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
     }
 }

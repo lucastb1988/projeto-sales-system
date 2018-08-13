@@ -5,11 +5,15 @@ import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemPedido implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	//não pode fazer referência ciclica do item pedido para pedido e produto
+	@JsonIgnore //não será serializado id
 	@EmbeddedId //id embutido em um tipo auxiliar
 	private ItemPedidoPk id = new ItemPedidoPk(); //informar que o id é uma chave composta de Pedido + Produto
 
@@ -30,6 +34,9 @@ public class ItemPedido implements Serializable {
 		this.preco = preco;
 	}
 	
+	//tudo que comeca com get pode ser serializado
+	//não pode fazer referência ciclica do item pedido para pedido
+	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}

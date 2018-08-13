@@ -22,8 +22,8 @@ public class CategoriaResource {
     private CategoriaService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> buscar(@PathVariable Integer id) {
-		Categoria obj = service.buscar(id);
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
+		Categoria obj = service.find(id);
 
 		//gera response 200(ok)
 		return ResponseEntity.ok().body(obj);
@@ -31,13 +31,21 @@ public class CategoriaResource {
 	
 	// Não terá retorno de entidade no ResponseEntity
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> inserir(@RequestBody Categoria obj) { //@RequestBody faz o objeto ser convertido em json automaticamente
-		obj = service.inserir(obj);
+	public ResponseEntity<Void> insert(@RequestBody Categoria obj) { //@RequestBody faz o objeto ser convertido em json automaticamente
+		obj = service.insert(obj);
 		// adicionar e converter na url de inserir o novo id que acabou de ser gerado após o save
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri(); //recupera o id criado e transforma em uri
 		
 		//gera response 201(created) junto a uri criada
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
+		obj.setId(id);
+		obj = service.update(obj);
+		
+		return ResponseEntity.noContent().build();
 	}
 }

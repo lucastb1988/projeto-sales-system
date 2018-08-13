@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,8 @@ public class CategoriaResource {
 	
 	// Não terá retorno de entidade no ResponseEntity / traz resposta com corpo vazio
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) { //@RequestBody faz o objeto ser convertido em json automaticamente
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) { //@RequestBody faz o objeto ser convertido em json automaticamente
+		Categoria obj = service.fromDto(objDto);
 		obj = service.insert(obj);
 		// adicionar e converter na url de inserir o novo id que acabou de ser gerado após o save
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -47,7 +50,8 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
+		Categoria obj = service.fromDto(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
 		
@@ -59,7 +63,6 @@ public class CategoriaResource {
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		
-		//gera response 201(created)
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -71,7 +74,6 @@ public class CategoriaResource {
 		//para transformar em listDto no final da função inserir o list no collect(Collectors.toList())
 		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
 		
-		//gera response 200(ok)
 		return ResponseEntity.ok().body(listDto);
 	}
 	
@@ -88,7 +90,6 @@ public class CategoriaResource {
 		//Page já é java8 compliance então não é necessario passar o stream e collect(Collectors.toList()) como no serviço findAll acima
 		Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));
 		
-		//gera response 200(ok)
 		return ResponseEntity.ok().body(listDto);
 	}
 }

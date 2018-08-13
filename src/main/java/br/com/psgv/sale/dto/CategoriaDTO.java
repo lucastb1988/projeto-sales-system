@@ -2,6 +2,10 @@ package br.com.psgv.sale.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import br.com.psgv.sale.domain.Categoria;
 
 public class CategoriaDTO implements Serializable {
@@ -9,6 +13,9 @@ public class CategoriaDTO implements Serializable {
     private static final long serialVersionUID = -9031487931907790020L;
 
 	private Integer id;
+	
+	@NotEmpty(message = "Preenchimento Obrigatório")
+	@Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 80 caracteres")
 	private String nome;
 	
 	public CategoriaDTO() {

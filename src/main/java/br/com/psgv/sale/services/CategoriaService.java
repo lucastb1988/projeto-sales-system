@@ -3,9 +3,11 @@ package br.com.psgv.sale.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.psgv.sale.domain.Categoria;
+import br.com.psgv.sale.exceptions.DataIntegrityException;
 import br.com.psgv.sale.exceptions.ObjectNotFoundException;
 import br.com.psgv.sale.repositories.CategoriaRepository;
 
@@ -29,5 +31,15 @@ public class CategoriaService {
     public Categoria update(Categoria obj) {
     	find(obj.getId());
     	return repo.save(obj);
+    }
+    
+    public void delete(Integer id) {
+    	find(id);
+    	
+    	try {
+    		repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos relacionados a ela");
+		}
     }
 }

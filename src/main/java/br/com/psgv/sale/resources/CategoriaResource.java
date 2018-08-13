@@ -29,7 +29,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	// Não terá retorno de entidade no ResponseEntity
+	// Não terá retorno de entidade no ResponseEntity / traz resposta com corpo vazio
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Categoria obj) { //@RequestBody faz o objeto ser convertido em json automaticamente
 		obj = service.insert(obj);
@@ -45,6 +45,13 @@ public class CategoriaResource {
 	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
 		obj.setId(id);
 		obj = service.update(obj);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
 		
 		return ResponseEntity.noContent().build();
 	}

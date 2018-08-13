@@ -2,8 +2,9 @@ package br.com.psgv.sale.domain.enums;
 
 public enum EstadoPagamento {
 	
-	PESSOA_FISICA(1, "Pessoa Física"),
-	PESSOA_JURIDICA(2, "Pessoa Jurídica");
+	PENDENTE(1, "Pendente"),
+	QUITADO(2, "Quitado"),
+	CANCELADO(3, "Cancelado");
 	
 	private Integer codigo;
 	private String descricao;
@@ -27,9 +28,9 @@ public enum EstadoPagamento {
 			return null;
 		}
 		
-		for (EstadoPagamento tipo : EstadoPagamento.values()) {
-			if (tipo.getCodigo().equals(codigo)) {
-				return tipo;
+		for (EstadoPagamento estado : EstadoPagamento.values()) {
+			if (estado.getCodigo().equals(codigo)) {
+				return estado;
 			}
 		}
 		

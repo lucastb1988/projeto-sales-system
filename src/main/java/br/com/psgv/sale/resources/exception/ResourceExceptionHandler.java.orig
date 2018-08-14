@@ -21,7 +21,7 @@ public class ResourceExceptionHandler {
 	}
 	
 	@ExceptionHandler(DataIntegrityException.class)
-	public ResponseEntity<StandardError> objectNotFound(DataIntegrityException e) {
+	public ResponseEntity<StandardError> dataIntegrity(DataIntegrityException e) {
 		
 		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
@@ -32,8 +32,14 @@ public class ResourceExceptionHandler {
 		
 		ValidationError err = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Erro de Validação", System.currentTimeMillis());
 		
+<<<<<<< HEAD
+		//iterando na lista de erros desta exceção MethodArgumentNotValidException e add no ValidationError
+		for (FieldError field : e.getBindingResult().getFieldErrors()) {
+			err.addError(field.getField(), field.getDefaultMessage());
+=======
 		for (FieldError field : e.getBindingResult().getFieldErrors()) {
 			err.addErrors(field.getField(), field.getDefaultMessage());
+>>>>>>> 0245c1f7bc02a319fd1558c43bf044a62a89d319
 		}
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);

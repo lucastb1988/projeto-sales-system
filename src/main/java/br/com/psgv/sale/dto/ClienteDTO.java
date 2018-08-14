@@ -8,7 +8,9 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.psgv.sale.domain.Cliente;
+import br.com.psgv.sale.services.validation.ClienteUpdate;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
     
     private static final long serialVersionUID = -9031487931907790020L;

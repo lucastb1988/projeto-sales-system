@@ -10,6 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class ItemPedido implements Serializable {
 	
+	//tudo que é get é serializado no json e informado na resposta da requisição
+	//getSubTotal será serializado no json na resposta da requisição
+	
 	private static final long serialVersionUID = 1L;
 	
 	//não pode fazer referência ciclica do item pedido para pedido e produto
@@ -32,6 +35,10 @@ public class ItemPedido implements Serializable {
 		this.desconto = desconto;
 		this.quantidade = quantidade;
 		this.preco = preco;
+	}
+	
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
 	}
 	
 	//tudo que comeca com get pode ser serializado

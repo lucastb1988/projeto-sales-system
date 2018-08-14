@@ -20,6 +20,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class Pedido implements Serializable {
 	
+	//tudo que é get é serializado no json e informado na resposta da requisição
+	//getValorTotal será serializado no json na resposta da requisição
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -52,6 +55,16 @@ public class Pedido implements Serializable {
 		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
+	}
+	
+	public double getValorTotal() {
+		double soma = 0.0;
+		
+		for (ItemPedido item : itens) {
+			soma = soma + item.getSubTotal();
+		}
+		
+		return soma;
 	}
 
 	public Integer getId() {

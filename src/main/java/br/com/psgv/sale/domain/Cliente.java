@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ import br.com.psgv.sale.domain.enums.TipoCliente;
 public class Cliente implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-    
+	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
@@ -31,13 +32,17 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
-	@OneToMany(mappedBy = "cliente")
+	//Sempre observar relacionamento um para muitos, se é necessário barrar ou nao quando deletar a entidade principal 
+	//(neste caso sempre que deletar a entidade Cliente, será deletado também a entidade de Endereço)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL) //qualquer operação que for relacionada a cliente será deletada juntamente, neste caso Endereco será deletado automaticamente caso cliente for deletado
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
 	@CollectionTable(name = "telefone")
 	private Set<String> telefones = new HashSet<>();
 	
+	//Sempre observar relacionamento um para muitos, se é necessário barrar ou nao quando deletar a entidade principal 
+	//(neste caso sempre que deletar a entidade Cliente, será barrado a entidade de Pedido para que dê erro caso for deletado um Cliente com Pedido)
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();

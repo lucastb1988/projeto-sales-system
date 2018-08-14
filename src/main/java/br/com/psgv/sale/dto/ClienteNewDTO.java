@@ -6,23 +6,25 @@ public class ClienteNewDTO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	//Cliente
 	private String nome;
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
+	//Telefone (dentro de cliente)
+	private String telefone1;
+	private String telefone2;
+	private String telefone3;
 	
+	//Endereco
 	private String logradouro;
 	private String numero;
 	private String complemento;
 	private String bairro;
 	private String cep;
-	
+	//Cidade (dentro de endereço)
 	private Integer cidadeId;
 
-	private String telefone1;
-	private String telefone2;
-	private String telefone3;
-	
 	public ClienteNewDTO() {
 		super();
 	}

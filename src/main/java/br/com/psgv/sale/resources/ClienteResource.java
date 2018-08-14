@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.psgv.sale.domain.Cliente;
 import br.com.psgv.sale.dto.ClienteDTO;
+import br.com.psgv.sale.dto.ClienteNewDTO;
 import br.com.psgv.sale.services.ClienteService;
 
 @RestController
@@ -36,7 +37,7 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDto) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
 		Cliente obj = service.fromDto(objDto);
 		obj = service.insert(obj);
 		

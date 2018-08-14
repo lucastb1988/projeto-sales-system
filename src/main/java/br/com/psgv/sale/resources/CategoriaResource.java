@@ -55,7 +55,7 @@ public class CategoriaResource {
 		obj.setId(id);
 		obj = service.update(obj);
 		
-		//gera response 201(created)
+		//gera response 204(no content)
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -78,14 +78,14 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<CategoriaDTO>> findPage(
+	public ResponseEntity<Page<CategoriaDTO>> findAllPerPage(
 			//@RequestParam similar ao @QueryParam (não é obrigatorio informar caso não tenha validação)
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		
-		Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
+		Page<Categoria> list = service.findAllPerPage(page, linesPerPage, orderBy, direction);
 		
 		//Page já é java8 compliance então não é necessario passar o stream e collect(Collectors.toList()) como foi feito no serviço findAll acima
 		Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));

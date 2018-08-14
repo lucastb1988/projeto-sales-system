@@ -2,6 +2,7 @@ package br.com.psgv.sale.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
@@ -19,13 +20,8 @@ public class ClienteDTO implements Serializable {
 	private String nome;
 	
 	@NotEmpty(message = "Preenchimento Obrigatório")
+	@Email(message = "E-mail inválido")
 	private String email;
-	
-	@NotEmpty(message = "Preenchimento Obrigatório")
-	private String cpfOuCnpj;
-	
-	@NotEmpty(message = "Preenchimento Obrigatório")
-	private Integer tipo;
 	
 	public ClienteDTO() {
 		super();
@@ -35,8 +31,6 @@ public class ClienteDTO implements Serializable {
 		id = obj.getId();
 		nome = obj.getNome();
 		email = obj.getEmail();
-		cpfOuCnpj = obj.getCpfOuCnpj();
-		tipo = obj.getTipo().getCodigo();
 	}
 
 	public Integer getId() {
@@ -61,21 +55,5 @@ public class ClienteDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getCpfOuCnpj() {
-		return cpfOuCnpj;
-	}
-
-	public void setCpfOuCnpj(String cpfOuCnpj) {
-		this.cpfOuCnpj = cpfOuCnpj;
-	}
-
-	public Integer getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
 	}
 }

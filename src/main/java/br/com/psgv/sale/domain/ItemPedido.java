@@ -10,7 +10,7 @@ public class ItemPedido implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@EmbeddedId //id embutido em um tipo auxiliar
+	@EmbeddedId //anotação para informar que este id é embutido em um tipo auxiliar
 	private ItemPedidoPk id = new ItemPedidoPk(); //informar que o id é uma chave composta de Pedido + Produto
 
 	private Double desconto;

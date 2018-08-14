@@ -87,7 +87,7 @@ public class CategoriaResource {
 		
 		Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
 		
-		//Page já é java8 compliance então não é necessario passar o stream e collect(Collectors.toList()) como no serviço findAll acima
+		//Page já é java8 compliance então não é necessario passar o stream e collect(Collectors.toList()) como foi feito no serviço findAll acima
 		Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));
 		
 		return ResponseEntity.ok().body(listDto);

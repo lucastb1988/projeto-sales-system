@@ -19,30 +19,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	private String nome;
-	
+
 	private Double preco;
-	
+
 	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name = "PRODUTO_CATEGORIA",
-		joinColumns = @JoinColumn(name = "produto_id"),
-		inverseJoinColumns = @JoinColumn(name = "categoria_id")
-	)
+	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<>();
-	
+
 	// a partir do item pedido conhecer o seu produto
 	@JsonIgnore // o correto são os itens de pedido conhecer o produto e não o contrario
-	@OneToMany(mappedBy = "id.produto")//informar que foi mapeado pelo id (ItemPedidoPk) e pedido (Produto) *@ManytoOne
+	@OneToMany(mappedBy = "id.produto") // informar que foi mapeado pelo id (ItemPedidoPk) e pedido (Produto) *@ManytoOne
 	private Set<ItemPedido> itens = new HashSet<>();
-	
+
 	public Produto() {
 		super();
 	}
@@ -53,39 +50,39 @@ public class Produto implements Serializable {
 		this.nome = nome;
 		this.preco = preco;
 	}
-	
+
 	// a partir do item pedido conhecer o seu produto
 	@JsonIgnore // o correto são os itens de pedido conhecer o produto e não o contrario
 	public List<Pedido> getPedidos() {
 		List<Pedido> lista = new ArrayList<>();
-		
+
 		for (ItemPedido item : itens) {
 			lista.add(item.getPedido());
 		}
-		
+
 		return lista;
 	}
 
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public Double getPreco() {
 		return preco;
 	}
-	
+
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}

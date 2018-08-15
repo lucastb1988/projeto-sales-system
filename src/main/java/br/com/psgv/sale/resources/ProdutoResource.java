@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.psgv.sale.domain.Categoria;
 import br.com.psgv.sale.domain.Produto;
-import br.com.psgv.sale.dto.CategoriaDTO;
 import br.com.psgv.sale.dto.ProdutoDTO;
 import br.com.psgv.sale.resources.utils.URL;
 import br.com.psgv.sale.services.ProdutoService;

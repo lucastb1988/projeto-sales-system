@@ -41,6 +41,7 @@ public class CategoriaResource {
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) { //@RequestBody faz o objeto ser convertido em json automaticamente
 		Categoria obj = service.fromDto(objDto);
 		obj = service.insert(obj);
+		
 		// adicionar e converter na url de inserir o novo id que acabou de ser gerado após o save
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri(); //recupera o id criado e transforma em uri

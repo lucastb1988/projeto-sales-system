@@ -61,8 +61,8 @@ public class PedidoService {
     	
     	for (ItemPedido item : obj.getItens()) {
     		item.setDesconto(0.0);
-    		item.setProduto(produtoService.find(item.getProduto().getId())); //precisa pegar o preço do produto e setar no ItemPedido
-    		item.setPreco(item.getProduto().getPreco());
+    		item.setProduto(produtoService.find(item.getProduto().getId())); 
+    		item.setPreco(item.getProduto().getPreco()); //precisa pegar o preço do produto e setar no ItemPedido
     		item.setPedido(obj); //associar este Item Pedido com o Pedido a ser salvo
     	}
     	

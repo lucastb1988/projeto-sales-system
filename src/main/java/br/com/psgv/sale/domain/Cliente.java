@@ -98,12 +98,12 @@ public class Cliente implements Serializable {
 		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
-	public TipoCliente getTipo() {
-		return TipoCliente.toEnum(tipo);
+	public Integer getTipo() {
+		return tipo;
 	}
 
-	public void setTipo(TipoCliente tipo) {
-		this.tipo = tipo.getCodigo();
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
 	}
 
 	public List<Endereco> getEnderecos() {
@@ -122,10 +122,6 @@ public class Cliente implements Serializable {
 		this.telefones = telefones;
 	}
 
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
-	}
-	
 	public List<Pedido> getPedidos() {
 		return pedidos;
 	}

@@ -11,7 +11,7 @@ public class ItemPedidoPk implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@ManyToOne //tem que conhecer um produto
+	@ManyToOne //tem que conhecer um pedido
 	@JoinColumn(name = "pedido_id")
 	private Pedido pedido;
 	

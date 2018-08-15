@@ -11,11 +11,13 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import br.com.psgv.sale.domain.enums.EstadoPagamento;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED) //será necessario realizar Join com as subclasses PagamentoComBoleto e PagamentoComCartao
+@Inheritance(strategy = InheritanceType.JOINED) //será necessário realizar Join com as subclasses PagamentoComBoleto e PagamentoComCartao
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type") //anotação para informar que o objeto Pagamento terá um campo a mais que necessitará ser informado a subClasse PagamentoComBoleto ou PagamentoComCartão / ex: @type : "pagamentoComCartao"
 public abstract class Pagamento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

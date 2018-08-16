@@ -37,8 +37,8 @@ public class PedidoService {
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
     
-    @Autowired
-    private EmailService emailService;
+    /*@Autowired
+    private EmailService emailService;*/
     
     public Pedido find(Integer id) {
         Optional<Pedido> pedido = repo.findById(id);

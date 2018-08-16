@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.psgv.sale.domain.enums.Perfil;
 import br.com.psgv.sale.domain.enums.TipoCliente;
 
 @Entity
@@ -47,8 +50,13 @@ public class Cliente implements Serializable {
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
-	@CollectionTable(name = "telefone")
+	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
+	
+	//garantir que assim que gerar o banco de dados da tabela Cliente automaticamente sejam carregados os perfis também
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
 	
 	//Sempre observar relacionamento um para muitos, se é necessário barrar ou nao quando deletar a entidade principal 
 	//(neste caso sempre que deletar a entidade Cliente, será barrado a entidade de Pedido para que dê erro caso for deletado um Cliente com Pedido)
@@ -56,10 +64,12 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
+	//sempre que instanciar um cliente o mesmo terá como perfil CLIENTE
 	public Cliente() {
-		super();
+		addPerfil(Perfil.CLIENTE);
 	}
 
+	//sempre que instanciar um cliente o mesmo terá como perfil CLIENTE
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();
 		this.id = id;
@@ -68,6 +78,7 @@ public class Cliente implements Serializable {
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = tipo == null ? null : tipo.getCodigo();
 		this.senha = senha;
+		addPerfil(Perfil.CLIENTE);
 	}
 	
 	public Integer getId() {
@@ -132,6 +143,15 @@ public class Cliente implements Serializable {
 
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
+	}
+	
+	//Transforma todos os perfis encontrados em um set de inteiros
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCodigo());
 	}
 
 	public List<Pedido> getPedidos() {

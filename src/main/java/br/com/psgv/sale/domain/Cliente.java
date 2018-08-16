@@ -38,6 +38,9 @@ public class Cliente implements Serializable {
 	
 	private Integer tipo;
 	
+	@JsonIgnore
+	private String senha;
+	
 	//Sempre observar relacionamento um para muitos, se é necessário barrar ou nao quando deletar a entidade principal 
 	//(neste caso sempre que deletar a entidade Cliente, será deletado também a entidade de Endereço)
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL) //qualquer operação que for relacionada a cliente será deletada juntamente, neste caso Endereco será deletado automaticamente caso cliente for deletado
@@ -57,13 +60,14 @@ public class Cliente implements Serializable {
 		super();
 	}
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = tipo == null ? null : tipo.getCodigo();
+		this.senha = senha;
 	}
 	
 	public Integer getId() {
@@ -105,6 +109,14 @@ public class Cliente implements Serializable {
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
 	}
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
 	public List<Endereco> getEnderecos() {
 		return enderecos;
@@ -129,7 +141,7 @@ public class Cliente implements Serializable {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

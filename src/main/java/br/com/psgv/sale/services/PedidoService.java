@@ -70,8 +70,8 @@ public class PedidoService {
     	}
     	
     	itemPedidoRepository.saveAll(obj.getItens()); //salvar todos os itens de pedido encontrados
-    	emailService.sendOrderConfirmationEmail(obj);
-    	//System.out.println(obj);
+    	//emailService.sendOrderConfirmationHtmlEmail(obj);
+    	System.out.println(obj);
     	
     	return obj;
     }

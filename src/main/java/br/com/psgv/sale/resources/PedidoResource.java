@@ -3,15 +3,19 @@ package br.com.psgv.sale.resources;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.psgv.sale.domain.Categoria;
 import br.com.psgv.sale.domain.Pedido;
+import br.com.psgv.sale.dto.CategoriaDTO;
 import br.com.psgv.sale.services.PedidoService;
 
 @RestController
@@ -38,5 +42,20 @@ public class PedidoResource {
 		
 		// gera response 201(created) junto a uri criada
 		return ResponseEntity.created(uri).build();
+	}
+	
+	//método criado chamando pedidos paginados e por cliente informado
+    //cliente só recupera seus pedidos, se for outro cliente não recupera os pedidos de tal cliente e dá pau
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Page<Pedido>> findAllPerPage(
+			//@RequestParam similar ao @QueryParam (não é obrigatorio informar caso não tenha validação)
+			@RequestParam(value = "page", defaultValue = "0") Integer page, 
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
+			@RequestParam(value = "orderBy", defaultValue = "instante") String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "DESC") String direction) {
+		
+		Page<Pedido> list = service.findAllPerPage(page, linesPerPage, orderBy, direction);
+		
+		return ResponseEntity.ok().body(list);
 	}
 }

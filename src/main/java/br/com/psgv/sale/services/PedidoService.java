@@ -4,17 +4,23 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.psgv.sale.domain.Cliente;
 import br.com.psgv.sale.domain.ItemPedido;
 import br.com.psgv.sale.domain.PagamentoComBoleto;
 import br.com.psgv.sale.domain.Pedido;
 import br.com.psgv.sale.domain.enums.EstadoPagamento;
+import br.com.psgv.sale.exceptions.AuthorizationException;
 import br.com.psgv.sale.exceptions.ObjectNotFoundException;
 import br.com.psgv.sale.repositories.ItemPedidoRepository;
 import br.com.psgv.sale.repositories.PagamentoRepository;
 import br.com.psgv.sale.repositories.PedidoRepository;
+import br.com.psgv.sale.security.UserSpringSecurity;
 
 @Service
 public class PedidoService {
@@ -74,5 +80,20 @@ public class PedidoService {
     	System.out.println(obj);
     	
     	return obj;
+    }
+    
+    //método criado chamando pedidos paginados e por cliente informado
+    //cliente só recupera seus pedidos, se for outro cliente não recupera os pedidos de tal cliente e dá pau
+    public Page<Pedido> findAllPerPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+    	
+    	UserSpringSecurity user = UserService.authenticated();
+    	if (user == null) {
+    		throw new AuthorizationException("Acesso negado");
+    	}
+    	
+    	PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+    	Cliente cliente = clienteService.find(user.getId());
+    	
+    	return repo.findByCliente(cliente, pageRequest);
     }
 }

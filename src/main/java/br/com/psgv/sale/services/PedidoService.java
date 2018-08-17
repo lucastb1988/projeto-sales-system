@@ -84,8 +84,9 @@ public class PedidoService {
     
     //método criado chamando pedidos paginados e por cliente informado
     //cliente só recupera seus pedidos, se for outro cliente não recupera os pedidos de tal cliente e dá pau
-    public Page<Pedido> findAllPerPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+    public Page<Pedido> findAllPerPageByClient(Integer page, Integer linesPerPage, String orderBy, String direction) {
     	
+    	//usuario precisa estar autenticado
     	UserSpringSecurity user = UserService.authenticated();
     	if (user == null) {
     		throw new AuthorizationException("Acesso negado");

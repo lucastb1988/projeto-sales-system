@@ -47,14 +47,14 @@ public class PedidoResource {
 	//método criado chamando pedidos paginados e por cliente informado
     //cliente só recupera seus pedidos, se for outro cliente não recupera os pedidos de tal cliente e dá pau
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Page<Pedido>> findAllPerPage(
+	public ResponseEntity<Page<Pedido>> findAllPerPageByClient(
 			//@RequestParam similar ao @QueryParam (não é obrigatorio informar caso não tenha validação)
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
 			@RequestParam(value = "orderBy", defaultValue = "instante") String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "DESC") String direction) {
 		
-		Page<Pedido> list = service.findAllPerPage(page, linesPerPage, orderBy, direction);
+		Page<Pedido> list = service.findAllPerPageByClient(page, linesPerPage, orderBy, direction);
 		
 		return ResponseEntity.ok().body(list);
 	}

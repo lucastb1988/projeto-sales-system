@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import br.com.psgv.sale.security.JWTAuthenticationFilter;
+import br.com.psgv.sale.security.JWTAuthorizationFilter;
 import br.com.psgv.sale.security.JWTUtil;
 
 @Configuration
@@ -64,6 +65,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//adicionando(registrando) o filtro que irá interceptar a requisição e verificar se está válido login e gerar token
 		//authenticationManager() já é um metódo disponivel na classe WebSecurityConfigurerAdapter
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+		
+		//registrar filtro de autorização
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		
 		//assegura que o backend não irá criar sessão de usuário
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);	

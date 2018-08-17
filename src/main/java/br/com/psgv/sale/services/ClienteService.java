@@ -15,13 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.psgv.sale.domain.Cidade;
 import br.com.psgv.sale.domain.Cliente;
 import br.com.psgv.sale.domain.Endereco;
+import br.com.psgv.sale.domain.enums.Perfil;
 import br.com.psgv.sale.domain.enums.TipoCliente;
 import br.com.psgv.sale.dto.ClienteDTO;
 import br.com.psgv.sale.dto.ClienteNewDTO;
+import br.com.psgv.sale.exceptions.AuthorizationException;
 import br.com.psgv.sale.exceptions.DataIntegrityException;
 import br.com.psgv.sale.exceptions.ObjectNotFoundException;
 import br.com.psgv.sale.repositories.ClienteRepository;
 import br.com.psgv.sale.repositories.EnderecoRepository;
+import br.com.psgv.sale.security.UserSpringSecurity;
 
 @Service
 public class ClienteService {
@@ -36,6 +39,13 @@ public class ClienteService {
     private EnderecoRepository enderecoRepository;
     
     public Cliente find(Integer id) {
+    	
+    	//se o cliente logado não for ADMIN e não for o cliente do id solicitado, lança uma exceção
+    	UserSpringSecurity user = UserService.authenticated();
+    	if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+    		throw new AuthorizationException("Acesso negado");
+    	}
+    	
         Optional<Cliente> Cliente = repo.findById(id);
         return Cliente.orElseThrow(() -> new ObjectNotFoundException(
         		"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));

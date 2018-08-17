@@ -37,6 +37,12 @@ public class UserSpringSecurity implements UserDetails {
 		return authorities;
 	}
 	
+	//testa se usuario possui um dado Perfil
+	public boolean hasRole(Perfil perfil) {
+		//recupera autorizações que contenha tal Perfil informado (ADMIN OU CLIENTE) na forma de SimpleGrantedAuthority
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
+	}
+	
 	public Integer getId() {
 		return id;
 	}

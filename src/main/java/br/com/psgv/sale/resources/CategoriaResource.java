@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,8 +37,10 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	// Não terá retorno de entidade no ResponseEntity / traz resposta com corpo vazio
-	@RequestMapping(method = RequestMethod.POST)
+	//somente autoriza usuário a acessar este endpoint se for admin (mesmo autenticado não funciona)
+	//somente loga se for admin e passar token
+	@PreAuthorize("hasAnyRole('ADMIN')") 
+	@RequestMapping(method = RequestMethod.POST) // Não terá retorno de entidade no ResponseEntity / traz resposta com corpo vazio
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) { //@RequestBody faz o objeto ser convertido em json automaticamente
 		Categoria obj = service.fromDto(objDto);
 		obj = service.insert(obj);
@@ -50,6 +53,9 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	//somente autoriza usuário a acessar este endpoint se for admin (mesmo autenticado não funciona)
+	//somente loga se for admin e passar token
+	@PreAuthorize("hasAnyRole('ADMIN')") 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
 		Categoria obj = service.fromDto(objDto);
@@ -60,6 +66,9 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	//somente autoriza usuário a acessar este endpoint se for admin (mesmo autenticado não funciona)
+	//somente loga se for admin e passar token
+	@PreAuthorize("hasAnyRole('ADMIN')") 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);

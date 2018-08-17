@@ -8,6 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import br.com.psgv.sale.domain.Cliente;
 import br.com.psgv.sale.domain.Pedido;
 
 public abstract class AbstractEmailService implements EmailService {
@@ -46,6 +47,24 @@ public abstract class AbstractEmailService implements EmailService {
 		
 		//informa caminho do html para informar ao Thymeleaf (src/main/resources e templates é padrão do Spring)
 		return templateEngine.process("email/confirmacaoPedido", context);
+	}
+	
+	//envia email com nova senha
+	@Override
+	public void sendNewPasswordEmail(Cliente cliente, String newPassword) {
+		SimpleMailMessage sm = prepareNewPasswordEmail(cliente, newPassword); //prepara e-mail a ser enviado
+		sendEmail(sm);
+	}
+
+	protected SimpleMailMessage prepareNewPasswordEmail(Cliente cliente, String newPassword) {
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setTo(cliente.getEmail()); //Destinatário do email
+		sm.setFrom(sender); //Remetente
+		sm.setSubject("Solicitação de nova senha"); //Assunto
+		sm.setSentDate(new Date(System.currentTimeMillis())); //Data do envio do email baseada no servidor
+		sm.setText("Nova senha: " + newPassword); //Envio da nova senha
+		
+		return sm;
 	}
 	
 	/*public void sendOrderConfirmationHtmlEmail(Pedido obj) {

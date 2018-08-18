@@ -48,6 +48,9 @@ public class ClienteService {
     @Value("${img.prefix.client.profile}")
     private String prefix;
     
+    @Value("${img.profile.size}")
+    private Integer size;
+    
     @Autowired
     private ImageService imageService;
     
@@ -135,6 +138,12 @@ public class ClienteService {
     	
     	//extrair um jpg a partir do arquivo enviado
     	BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+    	/*//recortar imagem de forma que ela fique quadrada
+    	jpgImage = imageService.cropSquare(jpgImage);
+    	//função para redimensionar uma imagem
+    	//irá ajustar o recorte para ficarem iguais largura e altura (ex: 200 por 200)
+    	jpgImage = imageService.resize(jpgImage, size);*/
+    	
     	//personalizar nome do arquivo a partir da variavel criada em application.properties (prefix)
     	String fileName = prefix + user.getId() + ".jpg";
     	

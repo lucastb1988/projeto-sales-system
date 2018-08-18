@@ -49,8 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	//pode ser acessado mesmo se não estiver logado
 	private static final String[] PUBLIC_MATCHERS_POST = {
-			"/clientes",
-			"/clientes/picture",
+			"/clientes/**",
 			"/auth/forgot/**"
 	};
 

@@ -64,11 +64,13 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
+	private String imageUrl;
+	
 	//sempre que instanciar um cliente o mesmo terá como perfil CLIENTE
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE);
 	}
-
+	
 	//sempre que instanciar um cliente o mesmo terá como perfil CLIENTE
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();
@@ -162,6 +164,18 @@ public class Cliente implements Serializable {
 		this.pedidos = pedidos;
 	}
 	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public void setPerfis(Set<Integer> perfis) {
+		this.perfis = perfis;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

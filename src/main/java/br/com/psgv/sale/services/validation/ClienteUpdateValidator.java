@@ -12,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
 import br.com.psgv.sale.domain.Cliente;
-import br.com.psgv.sale.domain.enums.TipoCliente;
 import br.com.psgv.sale.dto.ClienteDTO;
 import br.com.psgv.sale.repositories.ClienteRepository;
 import br.com.psgv.sale.resources.exception.FieldMessage;
-import br.com.psgv.sale.services.validation.utils.BR;
 
 //Validação personalizada de cpf ou cnpj para Cliente
 public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {

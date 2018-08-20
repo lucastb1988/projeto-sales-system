@@ -35,7 +35,8 @@ public class AuthResource {
 		UserSpringSecurity user = UserService.authenticated(); //pega o usuario autenticado
 		String token = jwtUtil.generateToken(user.getUsername()); //gera o token novo através do usuario logado
 		response.addHeader("Authorization", "Bearer " + token); //adiciona na resposta do header o token novo
-
+		//Informa ao CORS(Cross-origin resource sharing) que o response do header estará sendo customizado e será incluido no header o campo Authorization
+		response.addHeader("access-control-expose-headers", "Authorization");
 		return ResponseEntity.noContent().build();
 	}
 	

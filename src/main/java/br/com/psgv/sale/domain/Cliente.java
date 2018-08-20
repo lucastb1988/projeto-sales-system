@@ -68,7 +68,7 @@ public class Cliente implements Serializable {
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE);
 	}
-
+	
 	//sempre que instanciar um cliente o mesmo terá como perfil CLIENTE
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();

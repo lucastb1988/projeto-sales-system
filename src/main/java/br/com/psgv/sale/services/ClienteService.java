@@ -1,9 +1,12 @@
 package br.com.psgv.sale.services;
 
+import java.awt.image.BufferedImage;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.psgv.sale.domain.Cidade;
 import br.com.psgv.sale.domain.Cliente;
@@ -37,6 +41,18 @@ public class ClienteService {
     
     @Autowired
     private EnderecoRepository enderecoRepository;
+    
+    @Autowired
+    private S3Service s3Service;
+    
+    @Value("${img.prefix.client.profile}")
+    private String prefix;
+    
+    @Value("${img.profile.size}")
+    private Integer size;
+    
+    @Autowired
+    private ImageService imageService;
     
     public Cliente find(Integer id) {
     	
@@ -111,5 +127,26 @@ public class ClienteService {
     	}
     	
     	return cli;
+    }
+    
+    //faz upload de imagem do usuário logado
+    public URI uploadProfilePicture(MultipartFile multipartFile) {
+    	UserSpringSecurity user = UserService.authenticated();
+    	if (user == null) {
+    		throw new AuthorizationException("Acesso negado");
+    	}
+    	
+    	//extrair um jpg a partir do arquivo enviado
+    	BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+    	/*//recortar imagem de forma que ela fique quadrada
+    	jpgImage = imageService.cropSquare(jpgImage);
+    	//função para redimensionar uma imagem
+    	//irá ajustar o recorte para ficarem iguais largura e altura (ex: 200 por 200)
+    	jpgImage = imageService.resize(jpgImage, size);*/
+    	
+    	//personalizar nome do arquivo a partir da variavel criada em application.properties (prefix)
+    	String fileName = prefix + user.getId() + ".jpg";
+    	
+    	return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
     }
 }

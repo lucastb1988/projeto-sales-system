@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class PsgvApplication implements CommandLineRunner {
-
+	
     public static void main(String[] args) {
         SpringApplication.run(PsgvApplication.class, args);
     }

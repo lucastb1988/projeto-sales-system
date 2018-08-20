@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.psgv.sale.domain.Categoria;
 import br.com.psgv.sale.domain.Pedido;
-import br.com.psgv.sale.dto.CategoriaDTO;
 import br.com.psgv.sale.services.PedidoService;
 
 @RestController

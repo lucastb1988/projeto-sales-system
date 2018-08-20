@@ -35,5 +35,4 @@ public enum Perfil {
 		
 		throw new IllegalArgumentException("Código inválido: " + codigo);
 	}
-
 }

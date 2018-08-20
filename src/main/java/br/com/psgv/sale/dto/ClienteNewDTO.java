@@ -30,6 +30,7 @@ public class ClienteNewDTO implements Serializable {
 	
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	private String senha;
+	
 	//Telefone (dentro de cliente)
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	private String telefone1;
@@ -49,6 +50,7 @@ public class ClienteNewDTO implements Serializable {
 	
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	private String cep;
+	
 	//Cidade (dentro de endereço)
 	private Integer cidadeId;
 

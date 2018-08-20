@@ -39,6 +39,7 @@ public class AuthResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	//requisição para chamar esqueci a senha e enviar uma nova a um e-mail já existente
 	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
 	public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDto objDto) {
 		authService.sendNewPassword(objDto.getEmail());

@@ -39,13 +39,13 @@ public class CategoriaResource {
 	
 	//somente autoriza usuário a acessar este endpoint se for admin (mesmo autenticado não funciona)
 	//somente loga se for admin e passar token
-	@PreAuthorize("hasAnyRole('ADMIN')") 
-	@RequestMapping(method = RequestMethod.POST) // Não terá retorno de entidade no ResponseEntity / traz resposta com corpo vazio
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@RequestMapping(method = RequestMethod.POST) //Não terá retorno de entidade no ResponseEntity / traz resposta com corpo vazio
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) { //@RequestBody faz o objeto ser convertido em json automaticamente
 		Categoria obj = service.fromDto(objDto);
 		obj = service.insert(obj);
 		
-		// adicionar e converter na url de inserir o novo id que acabou de ser gerado após o save
+		//adicionar e converter na url de inserir o novo id que acabou de ser gerado após o save
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri(); //recupera o id criado e transforma em uri
 		
@@ -55,7 +55,7 @@ public class CategoriaResource {
 	
 	//somente autoriza usuário a acessar este endpoint se for admin (mesmo autenticado não funciona)
 	//somente loga se for admin e passar token
-	@PreAuthorize("hasAnyRole('ADMIN')") 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
 		Categoria obj = service.fromDto(objDto);
@@ -68,7 +68,7 @@ public class CategoriaResource {
 	
 	//somente autoriza usuário a acessar este endpoint se for admin (mesmo autenticado não funciona)
 	//somente loga se for admin e passar token
-	@PreAuthorize("hasAnyRole('ADMIN')") 
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);

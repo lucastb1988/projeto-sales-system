@@ -35,5 +35,4 @@ public enum TipoCliente {
 		
 		throw new IllegalArgumentException("Código inválido: " + codigo);
 	}
-
 }

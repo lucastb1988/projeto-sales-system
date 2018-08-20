@@ -49,6 +49,7 @@ public class JWTUtil {
 		}
 		return null;
 	}
+	
 	//recupera Claims com usuário e tempo de expiração
 	private Claims getClaims(String token) {
 		try {

@@ -55,7 +55,7 @@ public class Cliente implements Serializable {
 	
 	//garantir que assim que gerar o banco de dados da tabela Cliente automaticamente sejam carregados os perfis também
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "PERFIS")
+	@CollectionTable(name = "PERFIL")
 	private Set<Integer> perfis = new HashSet<>();
 	
 	//Sempre observar relacionamento um para muitos, se é necessário barrar ou nao quando deletar a entidade principal 

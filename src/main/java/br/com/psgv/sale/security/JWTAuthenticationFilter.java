@@ -59,7 +59,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		
 	}
 	
 	//se autenticação der certa o que preciso fazer

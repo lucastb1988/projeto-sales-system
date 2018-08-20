@@ -21,7 +21,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	private UserDetailsService userDetailsService;
 
 	//este filtro irá analisar o token e ver se é válido e para isso também precisa do UserDetailsService para verificar as informaçoes do usuario
-	public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil,
+	public JWTAuthorizationFilter(AuthenticationManager authenticationManager, 
+								  JWTUtil jwtUtil,
 								  UserDetailsService userDetailsService) {
 		super(authenticationManager);
 		this.jwtUtil = jwtUtil;
@@ -60,7 +61,4 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		
 		return null;
 	}
-	
-	
-
 }

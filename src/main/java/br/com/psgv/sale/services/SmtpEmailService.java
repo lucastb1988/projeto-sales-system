@@ -11,19 +11,20 @@ import org.springframework.mail.SimpleMailMessage;
 import br.com.psgv.sale.domain.Pedido;
 
 public class SmtpEmailService extends AbstractEmailService {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(SmtpEmailService.class);
-	
+
 	@Autowired
 	private MailSender mailSender;
-	
-	/*@Autowired
-	private JavaMailSender javaMailSender;*/
+
+	/*
+	 * @Autowired private JavaMailSender javaMailSender;
+	 */
 
 	@Override
 	public void sendEmail(SimpleMailMessage msg) {
 		LOG.info("Enviando email...");
-		mailSender.send(msg); //enviar para seu e-mail de verdade recuperando a mensagem
+		mailSender.send(msg); // enviar para seu e-mail de verdade recuperando a mensagem
 		LOG.info("Email enviado");
 	}
 
@@ -35,11 +36,9 @@ public class SmtpEmailService extends AbstractEmailService {
 	public void sendOrderConfirmationHtmlEmail(Pedido obj) {
 	}
 
-	/*@Override
-	public void sendHtmlEmail(MimeMessage msg) {
-		LOG.info("Enviando email HTML...");
-		javaMailSender.send(msg); //enviar para seu e-mail de verdade recuperando a mensagem
-		LOG.info("Email enviado");
-	}*/
-
+	/*
+	 * @Override public void sendHtmlEmail(MimeMessage msg) {
+	 * LOG.info("Enviando email HTML..."); javaMailSender.send(msg); //enviar para
+	 * seu e-mail de verdade recuperando a mensagem LOG.info("Email enviado"); }
+	 */
 }

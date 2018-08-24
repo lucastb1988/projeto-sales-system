@@ -7,9 +7,9 @@ import br.com.psgv.sale.security.UserSpringSecurity;
 
 @Service
 public class UserService {
-	
-	//Static independente pode ser chamado independente de estar instanciado ou não
-	//retorna o usuário que estiver logado no sistema
+
+	// Static independente pode ser chamado independente de estar instanciado ou não
+	// retorna o usuário que estiver logado no sistema
 	public static UserSpringSecurity authenticated() {
 		try {
 			return (UserSpringSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

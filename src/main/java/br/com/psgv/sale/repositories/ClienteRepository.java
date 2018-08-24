@@ -8,9 +8,10 @@ import br.com.psgv.sale.domain.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
-	
-	//Query realizada por keyword
-	//Utilizando @Transactional faz a consulta ficar mais rápida e diminui Locking no gerenciamento de transações no BD
+
+	// Query realizada por keyword
+	// Utilizando @Transactional faz a consulta ficar mais rápida e diminui Locking
+	// no gerenciamento de transações no BD
 	@Transactional(readOnly = true)
 	Cliente findByEmail(String email);
 }

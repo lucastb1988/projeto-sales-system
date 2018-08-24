@@ -19,9 +19,9 @@ import br.com.psgv.sale.services.ProdutoService;
 @RestController
 @RequestMapping(value = "/produtos")
 public class ProdutoResource {
-    
-    @Autowired
-    private ProdutoService service;
+
+	@Autowired
+	private ProdutoService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Produto> find(@PathVariable Integer id) {
@@ -29,27 +29,28 @@ public class ProdutoResource {
 
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Page<ProdutoDTO>> search(
-			@RequestParam(value = "nome", defaultValue = "") String nome, 
-			@RequestParam(value = "categorias", defaultValue = "") String categorias, 
-			@RequestParam(value = "page", defaultValue = "0") Integer page, 
-			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
-			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
+	public ResponseEntity<Page<ProdutoDTO>> search(@RequestParam(value = "nome", defaultValue = "") String nome,
+			@RequestParam(value = "categorias", defaultValue = "") String categorias,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		
-		//variável para informar que o parametro passado na requisição está decodificado (se o usuário der espaço por exemplo no parametro será decodificado da forma informada)
+
+		// variável para informar que o parametro passado na requisição está
+		// decodificado (se o usuário der espaço por exemplo no parametro será  decodificado da forma informada)
 		String nomeDecoded = URL.decodeParam(nome);
-		
-		//gerar lista de ids(Integer) separada por , e passando uma String como parâmetro
+
+		// gerar lista de ids(Integer) separada por , e passando uma String como parâmetro
 		List<Integer> ids = URL.decodeIntList(categorias);
-		
+
 		Page<Produto> list = service.search(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
-		
-		//Page já é java8 compliance então não é necessario passar o stream e collect(Collectors.toList()) como foi feito no serviço findAll acima
+
+		// Page já é java8 compliance então não é necessario passar o stream e
+		// collect(Collectors.toList()) como foi feito no serviço findAll acima
 		Page<ProdutoDTO> listDto = list.map(obj -> new ProdutoDTO(obj));
-		
+
 		return ResponseEntity.ok().body(listDto);
 	}
 }

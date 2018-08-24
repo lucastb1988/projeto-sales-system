@@ -13,7 +13,7 @@ public class CidadeService {
 
 	@Autowired
 	private CidadeRepository cidadeRepository;
-	
+
 	public List<Cidade> findByEstado(Integer estadoId) {
 		return cidadeRepository.findCidades(estadoId);
 	}

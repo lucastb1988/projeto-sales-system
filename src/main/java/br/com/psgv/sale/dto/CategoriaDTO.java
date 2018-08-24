@@ -9,19 +9,19 @@ import org.hibernate.validator.constraints.Length;
 import br.com.psgv.sale.domain.Categoria;
 
 public class CategoriaDTO implements Serializable {
-    
-    private static final long serialVersionUID = -9031487931907790020L;
+
+	private static final long serialVersionUID = -9031487931907790020L;
 
 	private Integer id;
-	
+
 	@NotEmpty(message = "Preenchimento Obrigatório")
-	@Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 80 caracteres")
+	@Length(min = 5, max = 40, message = "O tamanho deve ser entre 5 e 40 caracteres")
 	private String nome;
-	
+
 	public CategoriaDTO() {
 		super();
 	}
-	
+
 	public CategoriaDTO(Categoria obj) {
 		id = obj.getId();
 		nome = obj.getNome();
@@ -30,17 +30,17 @@ public class CategoriaDTO implements Serializable {
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 }

@@ -12,46 +12,46 @@ import br.com.psgv.sale.services.validation.ClienteInsert;
 //Anotação Customizada para atender a validação de cpf ou cnpj da entidade Cliente
 @ClienteInsert
 public class ClienteNewDTO implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	//Cliente
+
+	// Cliente
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	@Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 80 caracteres")
 	private String nome;
-	
+
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	@Email(message = "E-mail inválido")
 	private String email;
-	
+
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	private String cpfOuCnpj;
 	private Integer tipo;
-	
+
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	private String senha;
-	
-	//Telefone (dentro de cliente)
+
+	// Telefone (dentro de cliente)
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	private String telefone1;
-	
+
 	private String telefone2;
 	private String telefone3;
-	
-	//Endereco
+
+	// Endereco
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	private String logradouro;
-	
+
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	private String numero;
-	
+
 	private String complemento;
 	private String bairro;
-	
+
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	private String cep;
-	
-	//Cidade (dentro de endereço)
+
+	// Cidade (dentro de endereço)
 	private Integer cidadeId;
 
 	public ClienteNewDTO() {
@@ -89,7 +89,7 @@ public class ClienteNewDTO implements Serializable {
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	public String getSenha() {
 		return senha;
 	}

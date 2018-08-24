@@ -22,25 +22,24 @@ public class HeaderExposureFilter implements Filter {
 	public void destroy() {
 	}
 
-	//incluir no header do response o location com o id novo criado
-	//Filtro que irá interceptar todas as requisições e irá expor o header location na resposta e encaminha a requisição para o ciclo normal
-	//Dessa forma o angular irá conseguir ler esse cabeçalho
+	// incluir no header do response o location com o id novo criado
+	// Filtro que irá interceptar todas as requisições e irá expor o header location
+	// na resposta e encaminha a requisição para o ciclo normal
+	// Dessa forma o angular irá conseguir ler esse cabeçalho
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
-		//Faz o casting do response para HttpServletResponse pois o metodo addHeader não tem no ServletResponse
+
+		// Faz o casting do response para HttpServletResponse pois o metodo addHeader
+		// não tem no ServletResponse
 		HttpServletResponse res = (HttpServletResponse) response;
-		
+
 		res.addHeader("access-control-expose-headers", "location");
-		
+
 		chain.doFilter(request, response);
 	}
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 	}
-	
-	
-
 }

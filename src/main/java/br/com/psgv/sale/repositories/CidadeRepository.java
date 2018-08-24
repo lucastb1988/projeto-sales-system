@@ -12,7 +12,7 @@ import br.com.psgv.sale.domain.Cidade;
 
 @Repository
 public interface CidadeRepository extends JpaRepository<Cidade, Integer> {
-	
+
 	@Transactional(readOnly = true)
 	@Query("SELECT obj FROM Cidade obj WHERE obj.estado.id = :estadoId ORDER BY obj.nome")
 	List<Cidade> findCidades(@Param("estadoId") Integer estado_id);

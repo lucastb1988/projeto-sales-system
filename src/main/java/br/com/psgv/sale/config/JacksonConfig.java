@@ -13,11 +13,11 @@ import br.com.psgv.sale.domain.PagamentoComCartao;
 //Foi criada esta classe para informar que existira um novo campo no objeto Pagamento no qual será configurado como PagamentoComCartao ou PagamentoComBoleto 
 @Configuration
 public class JacksonConfig {
-	
-	//https://stackoverflow.com/questions/41452598/overcome-can-not-construct-instance-ofinterfaceclass-without
 
-	//@Bean irá informar que está anotação estará junto a anotação @Configuration
-	//configuração abaixo é padrão do Spring, o que irá mudar será somente as subClasses informadas abaixo
+	// https://stackoverflow.com/questions/41452598/overcome-can-not-construct-instance-ofinterfaceclass-without
+
+	// @Bean irá informar que está anotação estará junto a anotação @Configuration
+	// configuração abaixo é padrão do Spring, o que irá mudar será somente as subClasses informadas abaixo
 	@Bean
 	public Jackson2ObjectMapperBuilder objectMapperBuilder() {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder() {

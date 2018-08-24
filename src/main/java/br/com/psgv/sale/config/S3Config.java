@@ -12,24 +12,24 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 @Configuration
 public class S3Config {
-	
+
 	@Value("${aws.access_key_id}")
 	private String awsId;
-	
+
 	@Value("${aws.secret_access_key}")
 	private String awsKey;
-	
+
 	@Value("${s3.region}")
 	private String region;
-	
-	//criar credenciais para acesso ao AWS
+
+	// criar credenciais para acesso ao AWS
 	@Bean
 	public AmazonS3 s3client() {
 		BasicAWSCredentials awsCred = new BasicAWSCredentials(awsId, awsKey);
-		
+
 		AmazonS3 s3client = AmazonS3ClientBuilder.standard().withRegion(Regions.fromName(region))
-						    .withCredentials(new AWSStaticCredentialsProvider(awsCred)).build();
-				
+				.withCredentials(new AWSStaticCredentialsProvider(awsCred)).build();
+
 		return s3client;
 	}
 }

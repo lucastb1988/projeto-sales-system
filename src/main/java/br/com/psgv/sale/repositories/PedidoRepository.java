@@ -11,8 +11,8 @@ import br.com.psgv.sale.domain.Pedido;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
-	
-	//encontrar pedidos paginado por cliente
+
+	// encontrar pedidos paginado por cliente
 	@Transactional(readOnly = true)
 	Page<Pedido> findByCliente(Cliente cliente, Pageable pageRequest);
 }

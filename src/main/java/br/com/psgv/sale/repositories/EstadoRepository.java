@@ -12,7 +12,8 @@ import br.com.psgv.sale.domain.Estado;
 public interface EstadoRepository extends JpaRepository<Estado, Integer> {
 	
 	//Query realizada por keyword
-	//Utilizando @Transactional faz a consulta ficar mais rápida e diminui Locking no gerenciamento de transações no BD
+	// Utilizando @Transactional faz a consulta ficar mais rápida e diminui Locking
+	// no gerenciamento de transações no BD
 	@Transactional(readOnly = true)
 	List<Estado> findAllByOrderByNome();
 }

@@ -12,23 +12,23 @@ import br.com.psgv.sale.services.validation.ClienteUpdate;
 
 @ClienteUpdate
 public class ClienteDTO implements Serializable {
-    
-    private static final long serialVersionUID = -9031487931907790020L;
+
+	private static final long serialVersionUID = -9031487931907790020L;
 
 	private Integer id;
-	
+
 	@NotEmpty(message = "Preenchimento Obrigatório")
-	@Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 40 caracteres")
+	@Length(min = 5, max = 40, message = "O tamanho deve ser entre 5 e 40 caracteres")
 	private String nome;
-	
+
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	@Email(message = "E-mail inválido")
 	private String email;
-	
+
 	public ClienteDTO() {
 		super();
 	}
-	
+
 	public ClienteDTO(Cliente obj) {
 		id = obj.getId();
 		nome = obj.getNome();

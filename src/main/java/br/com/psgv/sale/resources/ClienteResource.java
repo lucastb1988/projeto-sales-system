@@ -50,9 +50,8 @@ public class ClienteResource {
 		Cliente obj = service.fromDto(objDto);
 		obj = service.insert(obj);
 		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(obj.getId()).toUri(); //recupera o id criado e transforma em uri
-		
+		//recupera o id criado e transforma em uri		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri(); 
 		return ResponseEntity.created(uri).build();
 	}
 	

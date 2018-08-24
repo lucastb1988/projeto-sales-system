@@ -9,7 +9,7 @@ import org.springframework.mail.SimpleMailMessage;
 import br.com.psgv.sale.domain.Pedido;
 
 public class MockEmailService extends AbstractEmailService {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(MockEmailService.class);
 
 	@Override

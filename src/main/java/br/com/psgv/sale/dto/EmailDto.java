@@ -6,10 +6,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 public class EmailDto implements Serializable {
-    
-    private static final long serialVersionUID = -9031487931907790020L;
 
-    @NotEmpty(message = "Preenchimento Obrigatório")
+	private static final long serialVersionUID = -9031487931907790020L;
+
+	@NotEmpty(message = "Preenchimento Obrigatório")
 	@Email(message = "E-mail inválido")
 	private String email;
 

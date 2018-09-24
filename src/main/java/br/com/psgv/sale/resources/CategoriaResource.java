@@ -21,6 +21,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.psgv.sale.domain.Categoria;
 import br.com.psgv.sale.dto.CategoriaDTO;
 import br.com.psgv.sale.services.CategoriaService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import springfox.documentation.service.ResponseMessage;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -29,6 +33,8 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 
+	//Mensagem do serviço personalizada no Swagger
+	@ApiOperation(value="Busca por id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		Categoria obj = service.find(id);
@@ -40,8 +46,8 @@ public class CategoriaResource {
 	// somente autoriza usuário a acessar este endpoint se for admin (mesmo autenticado não funciona)
 	// somente loga se for admin e passar token
 	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value="Insere categoria")
 	@RequestMapping(method = RequestMethod.POST) // Não terá retorno de entidade no ResponseEntity / traz resposta com corpo vazio
-	
 	// @RequestBody faz o objeto ser convertido em json automaticamente
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) { 
 		Categoria obj = service.fromDto(objDto);
@@ -58,6 +64,7 @@ public class CategoriaResource {
 	// somente autoriza usuário a acessar este endpoint se for admin (mesmo
 	// autenticado não funciona) somente loga se for admin e passar token
 	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value="Atualiza categoria")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
 		Categoria obj = service.fromDto(objDto);
@@ -71,6 +78,10 @@ public class CategoriaResource {
 	// somente autoriza usuário a acessar este endpoint se for admin (mesmo
 	// autenticado não funciona) somente loga se for admin e passar token
 	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value="Deleta categoria por id")
+	@ApiResponses(value = { //mensagem de resposta para endpoint especifico (diferente da resposta global criada no SwaggerConfig ex =private final ResponseMessage m204del = simpleMessage(204, "Deleção ok");)
+			@ApiResponse(code = 400, message = "Não é possível excluir uma categoria que possui produtos"),
+			@ApiResponse(code = 404, message = "Código inexistente") })
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
@@ -78,6 +89,7 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 
+	@ApiOperation(value="Retorna todas categorias")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		List<Categoria> list = service.findAll();
@@ -89,6 +101,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 
+	@ApiOperation(value="Retorna todas categorias paginada")
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<CategoriaDTO>> findAllPerPage(
 			// @RequestParam similar ao @QueryParam (não é obrigatorio informar caso não tenha validação)
